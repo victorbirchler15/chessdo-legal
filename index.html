@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Chess Do</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Luckiest+Guy&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#F2EDE4; --card:#F7F2E9; --surface:#DDD5C8;
+    --ink:#2B2018; --muted:#8C7B6B; --accent:#C24B2A;
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0; background:var(--bg); color:var(--ink);
+    font-family:'Nunito',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+    min-height:100vh; display:flex; align-items:center; justify-content:center;
+    -webkit-font-smoothing:antialiased; padding:24px;
+  }
+  .box{max-width:420px; text-align:center}
+  .brand{font-family:'Luckiest Guy',cursive; font-size:44px; color:var(--accent); margin:0 0 6px}
+  .tag{color:var(--muted); font-weight:700; margin:0 0 32px}
+  .links{display:flex; flex-direction:column; gap:12px}
+  .link{
+    display:block; background:var(--card); border:1px solid var(--surface);
+    border-radius:16px; padding:18px; text-decoration:none; color:var(--ink);
+    font-weight:800; font-size:17px;
+  }
+  .link:hover{border-color:var(--accent)}
+</style>
+</head>
+<body>
+  <div class="box">
+    <p class="brand">Chess Do</p>
+    <p class="tag">Échecs à variantes · tes pièces ont des pouvoirs</p>
+    <div class="links">
+      <a class="link" href="support.html">Assistance & FAQ</a>
+      <a class="link" href="privacy.html">Politique de confidentialité</a>
+    </div>
+  </div>
+</body>
+</html>
