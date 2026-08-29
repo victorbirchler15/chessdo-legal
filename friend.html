@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Chess Do — Ajouter un ami</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Luckiest+Guy&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#F2EDE4; --card:#F7F2E9; --surface:#DDD5C8;
+    --ink:#2B2018; --muted:#8C7B6B; --accent:#C24B2A;
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0; background:var(--bg); color:var(--ink);
+    font-family:'Nunito',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+    min-height:100vh; display:flex; align-items:center; justify-content:center;
+    -webkit-font-smoothing:antialiased; padding:24px;
+  }
+  .box{max-width:420px; width:100%; text-align:center}
+  .brand{font-family:'Luckiest Guy',cursive; font-size:34px; color:var(--accent); margin:0 0 4px}
+  .knight{font-size:52px; margin:0 0 8px}
+  h1{font-size:24px; font-weight:800; margin:0 0 8px; line-height:1.25}
+  .name{color:var(--accent)}
+  p{color:var(--muted); font-weight:600; margin:0 0 28px; line-height:1.5}
+  .btn{
+    display:block; background:var(--accent); color:#fff; text-decoration:none;
+    font-weight:800; font-size:18px; border-radius:16px; padding:18px;
+    box-shadow:0 3px 0 rgba(0,0,0,0.18);
+  }
+  .hint{color:var(--muted); font-size:13px; margin-top:18px}
+  .hint a{color:var(--accent); font-weight:700}
+</style>
+</head>
+<body>
+  <div class="box">
+    <div class="knight">♞</div>
+    <p class="brand">Chess Do</p>
+    <h1 id="title">Un ami veut t'ajouter</h1>
+    <p id="sub">Ouvre Chess Do pour l'ajouter à ta liste et le défier.</p>
+    <a class="btn" id="open" href="#">Ouvrir dans Chess Do</a>
+    <p class="hint">Pas encore le jeu ? Installe Chess Do, puis rouvre ce lien.</p>
+  </div>
+
+<script>
+  (function () {
+    var params = new URLSearchParams(location.search);
+    var id = (params.get('id') || '').toUpperCase().replace(/[^A-Z2-9]/g, '');
+    var deep = 'chessdo://friend/' + id;
+    var open = document.getElementById('open');
+    open.setAttribute('href', id ? deep : '#');
+
+    // Nom de l'expéditeur (best-effort, clé publiable = lecture seule)
+    if (id) {
+      var U = 'https://dxgoxwishzvynurcflzw.supabase.co';
+      var K = 'sb_publishable_Fm0TEy1AxwXB-7bEnslFLw_vkBKw3E5';
+      fetch(U + '/rest/v1/players?select=pseudo&device_id=eq.' + encodeURIComponent(id) + '&limit=1',
+        { headers: { apikey: K, Authorization: 'Bearer ' + K } })
+        .then(function (r) { return r.json(); })
+        .then(function (rows) {
+          var pseudo = rows && rows[0] && rows[0].pseudo;
+          if (pseudo) {
+            document.getElementById('title').innerHTML =
+              '<span class="name">' + pseudo.replace(/[<>&]/g, '') + '</span> veut t’ajouter';
+          }
+        })
+        .catch(function () {});
+    }
+  })();
+</script>
+</body>
+</html>
