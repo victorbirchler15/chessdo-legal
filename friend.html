@@ -46,8 +46,8 @@
     <h1 id="title">Un ami veut t'ajouter</h1>
     <p id="sub">Ouvre Chess Do pour l'ajouter à ta liste et le défier.</p>
     <a class="btn" id="open" href="#">Ouvrir dans Chess Do</a>
-    <a class="btn2" href="https://apps.apple.com/app/id6787052915">Pas encore le jeu ? Télécharger sur l’App Store</a>
-    <p class="hint">Une fois Chess Do installé, reviens ici et touche « Ouvrir dans Chess Do ».</p>
+    <a class="btn2" id="store" href="https://apps.apple.com/app/id6787052915">Pas encore le jeu ? Télécharger sur l’App Store</a>
+    <p class="hint" id="hint">Une fois Chess Do installé, reviens ici et touche « Ouvrir dans Chess Do ».</p>
   </div>
 
 <script>
@@ -56,6 +56,18 @@
     var id = (params.get('id') || '').toUpperCase().replace(/[^A-Z2-9]/g, '');
     var deep = 'chessdo://friend/' + id;
     var open = document.getElementById('open');
+
+    // Anglais si le navigateur n'est pas en français
+    var en = !/^fr/i.test(navigator.language || 'fr');
+    if (en) {
+      document.documentElement.lang = 'en';
+      document.title = 'Chess Do: Add a friend';
+      document.getElementById('title').textContent = 'A friend wants to add you';
+      document.getElementById('sub').textContent = 'Open Chess Do to add them to your list and challenge them.';
+      open.textContent = 'Open in Chess Do';
+      document.getElementById('store').textContent = "Don't have the game yet? Download it on the App Store";
+      document.getElementById('hint').textContent = 'Once Chess Do is installed, come back here and tap "Open in Chess Do".';
+    }
     open.setAttribute('href', id ? deep : '#');
 
     // Nom de l'expéditeur (best-effort, clé publiable = lecture seule)
@@ -69,7 +81,7 @@
           var pseudo = rows && rows[0] && rows[0].pseudo;
           if (pseudo) {
             document.getElementById('title').innerHTML =
-              '<span class="name">' + pseudo.replace(/[<>&]/g, '') + '</span> veut t’ajouter';
+              '<span class="name">' + pseudo.replace(/[<>&]/g, '') + '</span>' + (en ? ' wants to add you' : ' veut t’ajouter');
           }
         })
         .catch(function () {});
